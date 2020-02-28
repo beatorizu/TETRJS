@@ -32,12 +32,14 @@ document.addEventListener('keydown', event => {
         // Get new state of piece
         let p = moves[event.keyCode](board.piece);
 
-        // If the move is valid, move the piece
-        board.piece.move(p);
+        if (board.valid(p)) {
+            // If the move is valid, move the piece
+            board.piece.move(p);
 
-        // Clear old position before drawing
-        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+            // Clear old position before drawing
+            ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
-        board.piece.draw();
+            board.piece.draw();
+        }
     }
 });
