@@ -38,21 +38,15 @@ document.addEventListener('keydown', event => {
             while (board.valid((p))) {
                 board.piece.move(p);
                 p = moves[KEY.DOWN](board.piece);
-
             }
-            // Clear old position before drawing
-            ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-
-            board.piece.draw();
         }
         else if (board.valid(p)) {
             // If the move is valid, move the piece
             board.piece.move(p);
-
-            // Clear old position before drawing
-            ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-
-            board.piece.draw();
         }
+        // Clear old position before drawing
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
+        board.piece.draw();
     }
 });
