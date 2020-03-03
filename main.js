@@ -11,7 +11,7 @@ ctx.scale(BLOCK_SIZE, BLOCK_SIZE);
 let board = new Board();
 
 function play() {
-    board.getEmptyBoard();
+    board.reset();
     let piece = new Piece(ctx);
     piece.draw();
 
