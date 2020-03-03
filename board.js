@@ -19,7 +19,7 @@ class Board {
                 return (
                     this.isEmpty(value) ||
                     (this.insideWalls(x)) &&
-                    (this.aboveFloor(y))
+                    (this.aboveFloor(y) && this.isNotOccupied(x, y))
                 );
             });
         });
@@ -37,6 +37,10 @@ class Board {
         return y < ROWS;
     }
 
+    isNotOccupied(x, y) {
+        return this.grid[y][x] === 0;
+    }
+
     rotate(piece) {
         // Clone with JSON for immutability
         let p = JSON.parse(JSON.stringify(piece));
@@ -50,5 +54,43 @@ class Board {
         p.shape.forEach(row => row.reverse());
 
         return p;
+    }
+
+    freeze() {
+        this.piece.shape.forEach((row, y) => {
+            row.forEach((value, x) => {
+                if (value > 0) {
+                    this.grid[y + this.piece.y][x + this.piece.x] = value;
+                }
+            });
+        });
+    }
+
+    drawTiles() {
+        this.grid.forEach((row, y) => {
+            row.forEach((value, x) => {
+                if (value > 0) {
+                    this.ctx.fillStyle = COLORS[value - 1];
+                    this.ctx.fillRect(x, y, 1, 1);
+                }
+            });
+        });
+    }
+
+    draw() {
+        this.piece.draw();
+        this.drawTiles();
+    }
+
+    dropPiece() {
+        let p = moves[KEY.DOWN](this.piece);
+
+        if (this.valid(p)) {
+            this.piece.move(p);
+        } else {
+            this.freeze();
+        }
+
+        return true;
     }
 }

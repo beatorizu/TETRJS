@@ -13,7 +13,6 @@ let board = new Board();
 function play() {
     board.reset();
     let piece = new Piece(ctx);
-    piece.draw();
 
     board.piece = piece;
 
@@ -31,12 +30,14 @@ function animate(now = 0) {
     if (time.elapsed > time.level) {
         // Restart counting from now
         time.start = now;
+
+        board.dropPiece();
     }
 
     // Clear board before drawing new state
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
-    board.piece.draw();
+    board.draw();
     requestId = requestAnimationFrame(animate);
 }
 
