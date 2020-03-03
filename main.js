@@ -16,6 +16,28 @@ function play() {
     piece.draw();
 
     board.piece = piece;
+
+    time.start = performance.now();
+    animate();
+}
+
+let time = { start: 0, elapsed: 0, level: 1000 };
+
+function animate(now = 0) {
+    // Update elapsed time
+    time.elapsed = now - time.start;
+
+    // If elapsed time has passed time for current level
+    if (time.elapsed > time.level) {
+        // Restart counting from now
+        time.start = now;
+    }
+
+    // Clear board before drawing new state
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
+    board.piece.draw();
+    requestId = requestAnimationFrame(animate);
 }
 
 moves = {
@@ -45,9 +67,5 @@ document.addEventListener('keydown', event => {
             // If the move is valid, move the piece
             board.piece.move(p);
         }
-        // Clear old position before drawing
-        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-
-        board.piece.draw();
     }
 });
