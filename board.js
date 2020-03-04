@@ -1,5 +1,20 @@
 class Board {
+    ctx;
     grid;
+
+    constructor(ctx) {
+        this.ctx = ctx;
+        this.init();
+    }
+
+    init() {
+        // Calculate the size of canvas from constants
+        this.ctx.canvas.width = COLS * BLOCK_SIZE;
+        this.ctx.canvas.height = ROWS * BLOCK_SIZE;
+
+        // Scale blocks
+        this.ctx.scale(BLOCK_SIZE, BLOCK_SIZE);
+    }
 
     reset () {
         this.grid = this.getEmptyBoard();
