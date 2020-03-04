@@ -5,10 +5,6 @@ let board = new Board(ctx);
 
 function play() {
     board.reset();
-    let piece = new Piece(ctx);
-
-    board.piece = piece;
-
     time.start = performance.now();
     animate();
 }

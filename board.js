@@ -1,6 +1,7 @@
 class Board {
     ctx;
     grid;
+    piece;
 
     constructor(ctx) {
         this.ctx = ctx;
@@ -18,6 +19,7 @@ class Board {
 
     reset () {
         this.grid = this.getEmptyBoard();
+        this.piece = new Piece(this.ctx);
     }
 
     getEmptyBoard () {
