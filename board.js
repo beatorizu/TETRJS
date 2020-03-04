@@ -106,6 +106,7 @@ class Board {
             this.piece.move(p);
         } else {
             this.freeze();
+            this.piece = new Piece(this.ctx);
         }
 
         return true;
