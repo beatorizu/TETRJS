@@ -124,6 +124,14 @@ class Board {
         });
         if (lines > 0) {
             account.score += this.getLineClearPoints(lines);
+            account.lines += lines;
+
+            if (account.lines >= LINES_PER_LEVEL) {
+                // Goto next level!
+                account.level++;
+                account.lines -= LINES_PER_LEVEL;
+                time.level = LEVEL[account.level];
+            }
         }
     }
 

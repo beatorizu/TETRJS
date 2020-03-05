@@ -5,7 +5,8 @@ let board = new Board(ctx);
 
 let accountValues = {
     score: 0,
-    lines: 0
+    lines: 0,
+    level: 0
 }
 
 function updateAccount(key, value) {
