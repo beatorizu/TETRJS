@@ -20,6 +20,7 @@ const COLORS = [
     'purple',
     'red'
 ];
+Object.freeze(COLORS);
 
 const SHAPES = [
     [
@@ -58,3 +59,4 @@ const SHAPES = [
         [0, 0, 0]
     ]
 ];
+Object.freeze(SHAPES);
