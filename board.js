@@ -1,10 +1,13 @@
 class Board {
     ctx;
+    ctxNext;
     grid;
     piece;
+    next;
 
-    constructor(ctx) {
+    constructor(ctx, ctxNext) {
         this.ctx = ctx;
+        this.ctxNext = ctxNext;
         this.init();
     }
 
@@ -20,6 +23,8 @@ class Board {
     reset () {
         this.grid = this.getEmptyBoard();
         this.piece = new Piece(this.ctx);
+        this.piece.setStartingPosition();
+        this.getNewPiece();
     }
 
     getEmptyBoard () {
@@ -99,6 +104,12 @@ class Board {
         this.drawTiles();
     }
 
+    getNewPiece() {
+        this.next = new Piece(this.ctxNext);
+        this.ctxNext.clearRect(0, 0, this.ctxNext.canvas.width, this.ctxNext.canvas.height);
+        this.next.draw();
+    }
+
     dropPiece() {
         let p = moves[KEY.DOWN](this.piece);
 
@@ -110,7 +121,10 @@ class Board {
             if (this.piece.y === 0) {
                 return false;
             }
-            this.piece = new Piece(this.ctx);
+            this.piece = this.next;
+            this.piece.ctx = this.ctx;
+            this.piece.setStartingPosition();
+            this.getNewPiece();
         }
 
         return true;

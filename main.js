@@ -1,7 +1,17 @@
 const canvas = document.getElementById('board');
 const ctx = canvas.getContext('2d');
+const canvasNext = document.getElementById('next');
+const ctxNext = canvasNext.getContext('2d');
 
-let board = new Board(ctx);
+let board = new Board(ctx, ctxNext);
+
+initNext();
+
+function initNext() {
+    ctxNext.canvas.width = 4 * BLOCK_SIZE;
+    ctxNext.canvas.height = 4 * BLOCK_SIZE;
+    ctxNext.scale(BLOCK_SIZE, BLOCK_SIZE);
+}
 
 let accountValues = {
     score: 0,
