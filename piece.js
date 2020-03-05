@@ -16,7 +16,7 @@ class Piece {
         this.shape = SHAPES[typeId];
 
         // Starting position
-        this.x = 3;
+        this.x = 0;
         this.y = 0;
     }
 
@@ -43,4 +43,9 @@ class Piece {
     randomizeTetrominoType(numberOfTypes) {
         return Math.floor(Math.random() * numberOfTypes);
     }
+
+    setStartingPosition() {
+        this.x = this.typeId === 4 ? 4 : 3;
+    }
+
 }
