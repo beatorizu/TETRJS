@@ -3,6 +3,26 @@ const ctx = canvas.getContext('2d');
 
 let board = new Board(ctx);
 
+let accountValues = {
+    score: 0,
+    lines: 0
+}
+
+function updateAccount(key, value) {
+    let element = document.getElementById(key);
+    if (element) {
+        element.textContent = value;
+    }
+}
+
+let account = new Proxy(accountValues, {
+    set: (target, key, value) => {
+        target[key] = value;
+        updateAccount(key, value);
+        return true;
+    }
+});
+
 function play() {
     board.reset();
     time.start = performance.now();
@@ -49,11 +69,15 @@ document.addEventListener('keydown', event => {
         if (event.keyCode === KEY.SPACE) {
             // Hard drop
             while (board.valid((p))) {
+                account.score += POINTS.HARD_DROP;
                 board.piece.move(p);
                 p = moves[KEY.DOWN](board.piece);
             }
         }
         else if (board.valid(p)) {
+            if (event.keyCode === KEY.DOWN) {
+                account.score += POINTS.HARD_DROP;
+            }
             // If the move is valid, move the piece
             board.piece.move(p);
         }
