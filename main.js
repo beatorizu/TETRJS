@@ -34,14 +34,24 @@ let account = new Proxy(accountValues, {
     }
 });
 
-function play() {
-    addEventListener();
+function resetGame() {
+    account.score = 0;
+    account.lines = 0;
+    account.level = 0;
     board.reset();
-    time.start = performance.now();
-    animate();
+    time = { start: 0, elapsed: 0, level: LEVEL[account.level] };
 }
 
-let time = { start: 0, elapsed: 0, level: 1000 };
+function play() {
+    addEventListener();
+    resetGame();
+    time.start = performance.now();
+    // If we have an old game running a game then cancel the old
+    if (requestId) {
+        cancelAnimationFrame(requestId);
+    }
+    animate();
+}
 
 function animate(now = 0) {
     // Update elapsed time
