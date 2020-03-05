@@ -35,6 +35,7 @@ let account = new Proxy(accountValues, {
 });
 
 function play() {
+    addEventListener();
     board.reset();
     time.start = performance.now();
     animate();
@@ -81,28 +82,30 @@ moves = {
     [KEY.UP]: p => board.rotate(p)
 }
 
-document.addEventListener('keydown', event => {
-    if (moves[event.keyCode]) {
-        // Stop the event from bubbling
-        event.preventDefault();
+function addEventListener() {
+    document.addEventListener('keydown', event => {
+        if (moves[event.keyCode]) {
+            // Stop the event from bubbling
+            event.preventDefault();
 
-        // Get new state of piece
-        let p = moves[event.keyCode](board.piece);
+            // Get new state of piece
+            let p = moves[event.keyCode](board.piece);
 
-        if (event.keyCode === KEY.SPACE) {
-            // Hard drop
-            while (board.valid((p))) {
-                account.score += POINTS.HARD_DROP;
+            if (event.keyCode === KEY.SPACE) {
+                // Hard drop
+                while (board.valid((p))) {
+                    account.score += POINTS.HARD_DROP;
+                    board.piece.move(p);
+                    p = moves[KEY.DOWN](board.piece);
+                }
+            }
+            else if (board.valid(p)) {
+                if (event.keyCode === KEY.DOWN) {
+                    account.score += POINTS.HARD_DROP;
+                }
+                // If the move is valid, move the piece
                 board.piece.move(p);
-                p = moves[KEY.DOWN](board.piece);
             }
         }
-        else if (board.valid(p)) {
-            if (event.keyCode === KEY.DOWN) {
-                account.score += POINTS.HARD_DROP;
-            }
-            // If the move is valid, move the piece
-            board.piece.move(p);
-        }
-    }
-});
+    });
+}
