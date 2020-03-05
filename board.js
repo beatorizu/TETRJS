@@ -107,6 +107,9 @@ class Board {
         } else {
             this.freeze();
             this.clearLines();
+            if (this.piece.y === 0) {
+                return false;
+            }
             this.piece = new Piece(this.ctx);
         }
 
