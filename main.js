@@ -4,6 +4,7 @@ const canvasNext = document.getElementById('next');
 const ctxNext = canvasNext.getContext('2d');
 
 let board = new Board(ctx, ctxNext);
+let requestId;
 
 initNext();
 
